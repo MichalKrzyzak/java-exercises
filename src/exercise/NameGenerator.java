@@ -9,7 +9,7 @@ public class NameGenerator {
     private final String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "R", "S", "T", "U", "W", "Z"};
     private final List<String> lettersList = Arrays.asList(letters);
     private final Random random = new Random();
-    private int nameLength = random.nextInt(10) + 3;
+    private int nameLength = random.nextInt(11) + 4;
 
     public void runExercise() {
         System.out.print("\nWelcome to name generator.\nRandomly generated name is: " + getName() + "\n");

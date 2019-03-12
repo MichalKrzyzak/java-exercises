@@ -13,13 +13,22 @@ public class EncryptDecrypt {
     private final String pathToFile = (userHome + "\\Downloads\\words.csv");
     private Scanner input1 = new Scanner(System.in);
     private String userHash, userWord;
+    private String userMessage;
 
     public void runExercise() {
-        System.out.println("\nWelcome to encrypter/decrypter.\nWould you like to encrypt or decrypt a word?");
-        String userMessage = input1.nextLine();
 
-        if (userMessage.equalsIgnoreCase("encrypt")) {
+        if (checkFileExist()) {
+            System.out.println("\nWelcome to encrypter/decrypter.\nWould you like to encrypt or decrypt a word?");
+            userMessage = input1.nextLine();
+            encryptDecryptMessage();
+        } else {
             getUserWord();
+            encryptDecryptMessage();
+        }
+    }
+
+    private void encryptDecryptMessage() {
+        if (userMessage == null || !checkFileExist()) {
             System.out.println("Your word has been correctly encrypted. Please save this hash so you can decrypt it later: \n" + getEncryptedMessage(userWord));
             saveToCsv(userWord, getEncryptedMessage(userWord));
             askNewMessage();
@@ -27,14 +36,19 @@ public class EncryptDecrypt {
             getUserHash();
             getDecryptedMessage(userHash);
             askNewMessage();
+        } else if (userMessage.equalsIgnoreCase("encrypt")) {
+            getUserWord();
+            System.out.println("Your word has been correctly encrypted. Please save this hash so you can decrypt it later: \n" + getEncryptedMessage(userWord));
+            saveToCsv(userWord, getEncryptedMessage(userWord));
+            askNewMessage();
         } else {
-            System.out.println("You can only encrypt or decrypt a word. Please enter \"encrypt\" or \"decrypt\".");
+            System.out.println("Something went wrong! Try again.");
         }
     }
 
     private void getUserWord() {
         Scanner word = new Scanner(System.in);
-        System.out.println("Please enter word: ");
+        System.out.println("Please enter word you would like to encrypt: ");
         userWord = word.nextLine();
     }
 
@@ -119,7 +133,6 @@ public class EncryptDecrypt {
         File checkFile = new File(pathToFile);
         return checkFile.exists();
     }
-
 
     private void askNewMessage() {
         Scanner another = new Scanner(System.in);
